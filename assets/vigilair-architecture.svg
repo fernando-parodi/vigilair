@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" role="img" aria-labelledby="title desc">
+<title id="title">VigilAir — dual-sensor architecture</title>
+<desc id="desc">SCD41 measures real CO2, temperature and humidity. ENS160 estimates TVOC and categorical air quality. Both feed the ESP32-S3 local Wi-Fi dashboard. A separate SGP41 evaluation studies VOC and NOx indices.</desc>
+<rect width="960" height="400" rx="22" fill="#0c1529"/>
+<text x="48" y="58" fill="#f1f5f9" font-size="30" font-family="Arial, sans-serif" font-weight="bold">VigilAir</text>
+<text x="48" y="89" fill="#91a8c8" font-size="15" font-family="Arial, sans-serif">Environmental sensing · edge monitoring</text>
+<rect x="38" y="128" width="224" height="126" rx="14" fill="#142846" stroke="#438fd3"/>
+<text x="62" y="163" fill="white" font-size="23" font-weight="bold" font-family="Arial,sans-serif">SCD41</text>
+<text x="62" y="193" fill="#e1ecf8" font-size="16" font-family="Arial,sans-serif">Measured CO₂</text>
+<text x="62" y="220" fill="#b3c7df" font-size="14" font-family="Arial,sans-serif">Temperature · Humidity</text>
+<rect x="38" y="278" width="224" height="90" rx="14" fill="#2a1e35" stroke="#bb779d"/>
+<text x="62" y="311" fill="#fff" font-size="22" font-weight="bold" font-family="Arial,sans-serif">ENS160</text>
+<text x="62" y="337" fill="#e0b9d0" font-size="15" font-family="Arial,sans-serif">Estimated TVOC · AQI</text>
+<path d="M262 190H355 M262 322H306V229H355" fill="none" stroke="#91a8c8" stroke-width="3"/>
+<rect x="355" y="162" width="224" height="124" rx="15" fill="#14403e" stroke="#46c6b4"/>
+<text x="379" y="199" fill="#fff" font-size="24" font-weight="bold" font-family="Arial,sans-serif">ESP32-S3</text>
+<text x="379" y="230" fill="#bbf3e7" font-size="15" font-family="Arial,sans-serif">I²C · Signal processing</text>
+<text x="379" y="252" fill="#bbf3e7" font-size="15" font-family="Arial,sans-serif">Local in-memory history</text>
+<path d="M579 223H664" fill="none" stroke="#91a8c8" stroke-width="3"/>
+<polygon points="664,223 650,215 650,231" fill="#91a8c8"/>
+<rect x="664" y="162" width="257" height="124" rx="15" fill="#1e365d" stroke="#548fff"/>
+<text x="688" y="199" fill="#fff" font-size="22" font-weight="bold" font-family="Arial,sans-serif">Wi-Fi dashboard</text>
+<text x="688" y="230" fill="#d6e5fc" font-size="15" font-family="Arial,sans-serif">CO₂ · VOC · T · RH</text>
+<text x="688" y="251" fill="#d6e5fc" font-size="15" font-family="Arial,sans-serif">Trend plots · Local HTTP</text>
+<text x="355" y="340" fill="#aabed9" font-size="15" font-family="Arial,sans-serif">Separate evaluation: SCD41 + SGP41 → relative VOC / NOx indices</text>
+</svg>
