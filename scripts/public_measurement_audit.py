@@ -21,7 +21,7 @@ FIELDS = {
     "voc_index": {"vocindex", "sgp41vocindex"},
     "nox_index": {"noxindex", "sgp41noxindex"},
     "temperature_c": {"temperaturec", "tempc", "scd41temperaturec", "scd41tempc", "temp"},
-    "rh_pct": {"rhpct", "relativehumidity", "relativehumiditypct", "humiditypct", "rh"},
+    "rh_pct": {"rhpct", "relativehumidity", "relativehumiditypct", "humiditypct", "rh", "scd41rhpct", "scd41rh", "scd41relativehumiditypct"},
     "sraw_voc": {"srawvoc", "rawvoc", "sgp41rawvoc"},
     "sraw_nox": {"srawnox", "rawnox", "sgp41rawnox"},
 }
@@ -54,6 +54,45 @@ def quantile(sorted_values: list[float], q: float) -> float:
     lo = math.floor(idx)
     hi = math.ceil(idx)
     return sorted_values[lo] * (hi - idx) + sorted_values[hi] * (idx - lo) if lo != hi else sorted_values[lo]
+
+
+def diagnose_time_order(times: list[float]) -> dict:
+    """Aggregate timestamp integrity without revealing a single absolute timestamp.
+
+    Chronologically sorting timestamps can *characterize* a dataset but does not
+    establish that the logger actually captured rows in that order. Keep it
+    separate from validated acquisition-order cadence.
+    """
+    if not times:
+        return {"parsed_timestamps": 0, "source_order_verified": False}
+
+    row_deltas = [b - a for a, b in zip(times, times[1:])]
+    backwards = [d for d in row_deltas if d < 0]
+    equals = sum(d == 0 for d in row_deltas)
+    unique_times = sorted(set(times))
+    sorted_deltas = [b - a for a, b in zip(unique_times, unique_times[1:])]
+    median_sorted = statistics.median(sorted_deltas) if sorted_deltas else None
+
+    return {
+        "parsed_timestamps": len(times),
+        "unique_timestamps": len(unique_times),
+        "repeated_timestamp_rows": len(times) - len(unique_times),
+        "source_order_verified": not backwards and not equals,
+        "adjacent_backward_steps": len(backwards),
+        "adjacent_equal_steps": equals,
+        "largest_backward_jump_seconds": round(-min(backwards), 3) if backwards else 0,
+        "chronological_span_seconds": round(unique_times[-1] - unique_times[0], 3),
+        "sorted_unique_median_interval_seconds": round(median_sorted, 3) if median_sorted else None,
+        "sorted_unique_gaps_over_2x_median": (
+            sum(d > 2 * median_sorted for d in sorted_deltas)
+            if median_sorted else None
+        ),
+        "largest_sorted_unique_gap_seconds": round(max(sorted_deltas), 3) if sorted_deltas else None,
+        "sorted_interval_warning": (
+            "Sorted timestamps are only a diagnostic: they do NOT prove acquisition order, "
+            "sample completeness, or a continuous 24-hour logger run."
+        ),
+    }
 
 
 def audit(path: Path) -> dict:
@@ -133,7 +172,7 @@ def audit(path: Path) -> dict:
         if kind in ("voc_index", "nox_index") and (m["min"] < 0 or m["max"] > 500):
             warnings.append(f"{kind} values outside usual index range; check source semantics.")
     return {
-        "audit_schema": "vigilair-public-audit/0.2",
+        "audit_schema": "vigilair-public-audit/0.2.1",
         "source_file_basename": path.name,
         "source_sha256": checksum.hexdigest(),
         "source_bytes": path.stat().st_size,
@@ -142,6 +181,7 @@ def audit(path: Path) -> dict:
         "timestamp_column_present": time_col is not None,
         "timestamp_values_rejected": timestamps_rejected if time_col else None,
         "cadence": cadence,
+        "timestamp_order_diagnostics": diagnose_time_order(times) if time_col and not timestamps_rejected else None,
         "statistics": metrics,
         "warnings": warnings,
         "privacy": "Local aggregate only: no absolute timestamps, source directory, device IDs, raw observations, or events exported.",
@@ -163,6 +203,7 @@ def main() -> None:
     print("ROWS:", result["rows_read"])
     print("SHA256:", result["source_sha256"])
     print("CADENCE:", result["cadence"])
+    print("TIMESTAMP_ORDER:", json.dumps(result["timestamp_order_diagnostics"], ensure_ascii=False))
     print("WARNINGS:", len(result["warnings"]))
     print("NO NETWORK ACCESS OR FILE UPLOAD PERFORMED")
 
