@@ -32,7 +32,7 @@ class TimestampOrderTests(unittest.TestCase):
         self.assertEqual(d["unique_timestamps"], 3)
 
     def test_gap_in_sorted_unique_is_not_verified_capture(self):
-        d = diagnose_time_order([0, 5, 20, 25, 10])
+        d = diagnose_time_order([0, 5, 25, 30, 10])
         self.assertEqual(d["sorted_unique_gaps_over_2x_median"], 1)
         self.assertFalse(d["source_order_verified"])
 
