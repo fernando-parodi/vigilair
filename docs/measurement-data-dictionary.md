@@ -17,3 +17,9 @@ The public audit tool uses **conservative aliases** and does not assume the orig
 Timestamp recognition: ISO-8601 with timezone (including `Z`), or Unix epoch seconds/milliseconds in recognized timestamp columns. Timezone-naive strings are not used to validate cadence. Only elapsed duration and aggregate cadence are exported, never absolute dates.
 
 The audit deliberately reports **field coverage and basic descriptive statistics**, not clinical, occupational or regulatory air safety judgments.
+
+## Original source field labels (identified in v0.2.1)
+
+The current CSV header includes `ts_utc`, `co2_ppm`, `scd41_temp_c`, `scd41_rh_pct`, `sraw_voc`, `sraw_nox`, `voc_index` and `nox_index`. The audit recognizes these fields without publishing any raw timestamp, device identifier, Wi-Fi metadata or original measurement row.
+
+Its diagnostics distinguish **source row order** from interval estimates derived by sorting unique timestamps. A sorted interval is useful for assessing recording patterns, but cannot prove an uninterrupted sensor-acquisition stream.
