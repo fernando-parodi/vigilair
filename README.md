@@ -8,11 +8,17 @@ VigilAir is an independently developed, evolving sensor-fusion project exploring
 
 > The architecture illustration is schematic. The historical dashboard capture (VigilAir v3.2, SCD41 + ENS160) is available in the accompanying [public starter package](https://github.com/fernando-parodi/vigilair) for later binary upload. The image is **not** evidence of a released Sensirion SGP41 product.
 
-## Current milestone: v0.2 — Measurement Transparency
+## Current milestone: v0.2.1 — Verified acquisition timing aggregate
+
+An **owner-approved, aggregate-only audit** of the historical Sensirion Pro recording has now been [published as v0.2.1 evidence](evidence/verified/sensirion-pro-acquisition-timing-v0.2.1.md). The locally audited archive contains **17,280 stored rows**, **17,279 unique timestamps**, a **23:59:56** observed span, and **17,277 five-second intervals** plus one **11-second** interval and one equal-time pair. No backward timestamp steps or uptime-counter decreases were observed. The equal-time pair contains different sensor-field readings and is separated by **2,317 ms** of uptime.
+
+These are verified **recording-structure** results from owner-run local tools; raw measurements, original timestamps, device identifiers, full source path and source SHA-256 have not been published. They do **not** establish chemical identity, sensor calibration, missing-sample count, uninterrupted capture, or independently reproduce the historical 19 event classifications.
+
+## Previous milestone: v0.2 — Measurement Transparency
 
 The **v0.2 public evidence framework** is available, with [measurement provenance and evidence tiers](docs/measurement-transparency-v0.2.md), a [May 2026 historical analysis record](docs/historical-sensirion-pro-2026-05.md), a [measurement dictionary](docs/measurement-data-dictionary.md), and an [offline SHA-256/CSV audit tool](scripts/public_measurement_audit.py).
 
-**Data status:** the original 17,279-row Sensirion Pro CSV has **not** been re-opened for this publication. No real raw samples have been uploaded. The May 2026 counts and event categories are clearly labeled historical, unverified report results. Reproducible aggregate verification awaits a local audit of the original Windows F: drive file.
+**Evidence status:** the original private CSV was read and analyzed locally by its owner; the resulting approved timing aggregates have been published. The historical **19 candidate-event interpretations remain unverified**, and no source CSV rows or sensitive capture metadata have been uploaded.
 
 To generate a local, privacy-reduced report, follow the [Windows export procedure](docs/public-export-protocol.md). The export does not upload or publish any data automatically.
 
@@ -21,7 +27,7 @@ To generate a local, privacy-reduced report, follow the [Windows export procedur
 | Track | Sensors | Measurement meaning | Available development evidence |
 | --- | --- | --- | --- |
 | Embedded Wi-Fi prototype | Sensirion **SCD41** + ScioSense **ENS160** | Measured CO₂ (ppm), SCD41 temperature/RH, ENS160 estimated TVOC (ppb) and vendor AQI category | Recovered ESP32-S3 v2/v3 firmware, AP dashboard with local trend plots, CRC-checked SCD41 packets |
-| **Sensirion Pro** evaluation | Sensirion **SCD41** + **SGP41** | Measured CO₂ (ppm); temperature/RH; SGP41 raw VOC/NOx signals and relative VOC/NOx indices | Historical ~5-second logged evaluation: reported 17,279-row, ~24-hour trace and exploratory event analysis |
+| **Sensirion Pro** evaluation | Sensirion **SCD41** + **SGP41** | Measured CO₂ (ppm); temperature/RH; SGP41 raw VOC/NOx signals and relative VOC/NOx indices | Owner-audited 17,280-row, 23:59:56 acquisition record with 17,279 distinct timestamps; historical exploratory events remain unverified |
 
 **SGP41 VOC/NOx Index is not gas concentration in ppb; ENS160 eCO₂ is not a direct CO₂ measurement.** See [measurement semantics](docs/measurement-semantics.md).
 
@@ -41,7 +47,7 @@ Full embedded firmware, production device configuration, proprietary alarm or de
 | --- | --- |
 | [Architecture](docs/architecture.md) | Dual-sensor embedded device, local dashboard, Sensirion Pro historian concept |
 | [Measurement semantics](docs/measurement-semantics.md) | Distinguishing measured CO₂, eCO₂, estimated TVOC and VOC/NOx index |
-| [Validation notes](docs/validation.md) | Historical observations, datasets and evidence limits |
+| [Verified timing audit](evidence/verified/sensirion-pro-acquisition-timing-v0.2.1.md) | Owner-approved recording counts and timestamp anomalies, with provenance |\n| [Validation notes](docs/validation.md) | Historical observations, datasets and evidence limits |
 | [Public roadmap](docs/roadmap.md) | Version-by-version development |
 | [Runnable code examples](examples/README.md) | CRC test and CSV diagnostics |
 
