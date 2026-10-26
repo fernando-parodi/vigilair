@@ -1,0 +1,22 @@
+# Local configuration and private materials
+.env
+.env.*
+!.env.example
+secrets/
+*.key
+*.pem
+data/
+raw/
+exports/
+*.db
+*.sqlite
+*.sqlite3
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+build/
+dist/
+.DS_Store
+Thumbs.db
