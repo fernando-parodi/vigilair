@@ -40,3 +40,27 @@ Once the summary has been verified and approved, add a redacted copy under `evid
 ## 5. Keep analysis claims separate
 
 The historical 19 event labels were assigned by an unpublished exploratory analyzer. The public script does not reproduce or verify those classifications. Do not present its report as chemical identification or regulatory exposure monitoring.
+
+## 2b. Check timestamps when cadence is unavailable
+
+As of v0.2.1, the local audit explicitly reports `timestamp_order_diagnostics`: count of adjacent backward steps, adjacent equal steps, repeated timestamps, chronological span and diagnostic intervals derived from **sorted unique** timestamps. The report also includes `scd41_rh_pct` as relative humidity.
+
+**Important:** chronologically sorting timestamps is a forensic diagnostic, **not** proof that the acquisition stream had no duplicate, missing or out-of-order samples. The audit keeps `cadence: null` when original row order is not strictly increasing. Read `warnings` as well as `timestamp_order_diagnostics`.
+
+To update an existing clone before re-running the same command:
+
+```powershell
+git pull
+# Repeat the py -3 audit command above with your local CSV path
+```
+
+You can inspect only the redacted diagnostic summary without displaying the sensor data:
+
+```powershell
+$a = Get-Content "$env:USERPROFILE\Desktop\vigilair-v02-review\vigilair_v02_public_audit.json" -Raw | ConvertFrom-Json
+$a.timestamp_order_diagnostics | Format-List
+$a.found_measurement_fields | Format-List
+$a.warnings
+```
+
+If there are backward steps, the original CSV may be unsorted, may contain duplicates, or may have experienced a logger clock correction. Investigate before calling the sampling cadence verified.

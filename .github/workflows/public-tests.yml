@@ -1,0 +1,32 @@
+name: Public example checks
+
+on:
+  push:
+    branches: [main, v0.2.1-timestamp-diagnostics]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run synthetic regression tests
+        run: python -m unittest discover -s tests -v
+
+  crc-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run standalone sensor-protocol test
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Werror -pedantic examples/test_scd4x_crc8.cpp -o /tmp/vigilair_crc_test
+          /tmp/vigilair_crc_test
