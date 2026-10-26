@@ -1,6 +1,6 @@
 # v0.2 — Measurement Transparency
 
-**Status: provenance framework published; source-file revalidation pending.**
+**Status: evidence framework and owner-approved v0.2.1 acquisition-timing aggregates published.** The full raw CSV remains private and sensor calibration has not been established.
 
 VigilAir distinguishes a live instrument's **measured** signals, its **algorithmic indicators**, and an investigator's **hypotheses**. This milestone makes those distinctions reviewable and gives the owner a reproducible, offline way to audit the original measurement archive.
 
@@ -8,12 +8,12 @@ VigilAir distinguishes a live instrument's **measured** signals, its **algorithm
 
 | Tier | Meaning | Present in this repository |
 | --- | --- | --- |
-| A — Source verified | Original CSV actually read, hashed and analyzed using the public script | **Pending.** The original source is on a Windows F: drive, not accessible to this repository's authoring environment |
+| A — Owner-verified source audit | Original CSV actually read, hashed and analyzed locally by the owner; public derived figures can be checked only by authorized holders of the private archive | **Acquisition timing only:** see [approved v0.2.1 evidence](../evidence/verified/sensirion-pro-acquisition-timing-v0.2.1.md). Not independent third-party verification |
 | B — Historical analysis summary | Results previously generated during the May 2026 experiment, with no new direct verification | **Available:** see [May 2026 evaluation](historical-sensirion-pro-2026-05.md) |
 | C — UI or marketing illustration | Shows the look and design of the product, but does not prove a sensor reading | **Available only as legacy marketing assets outside the repository** |
 | D — Synthetic fixture | Made-up numbers for automated code tests, explicitly labeled | **Available** in `examples/analysis/sample_synthetic.csv` |
 
-The 17,279-row historical result is **Tier B** until the original CSV is read through the auditing script and its checksum and measurement schema are recorded.
+The original CSV was audited locally, confirming **17,280 stored rows and 17,279 distinct timestamps**. The difference explains a possible interpretation of the historical 17,279 count but does not prove the old counting method. Historical **event classifications** remain Tier B until reproduced.
 
 ## What is actually measured?
 
@@ -37,13 +37,13 @@ The script does not upload any data, infer pollutant identity, or claim calibrat
 
 ## Not yet claimed
 
-- No freshly verified 24-hour sample count or correlation coefficient.
+- Recording row count and timestamp spacing are owner-verified, but no independently reproduced historical event correlations or original event classifications.
 - No raw time-series release.
 - No reference-calibration certificate.
 - No independent chemical identification of isopropyl alcohol or other contaminants.
 - No proven exposure-limit compliance, regulatory conformity or safety-critical alarming.
 
-**A verified and voluntarily approved aggregate report can be appended in v0.2.1.** This doesn't require publishing private raw data or proprietary firmware.
+**The authorized aggregate-only acquisition timing report is published in v0.2.1.** Raw measurements and proprietary firmware remain private.
 
 ## Timestamp-order diagnostic refinement (v0.2.1)
 
@@ -52,3 +52,10 @@ The first offline direct check of the original file returned 17,280 rows (versus
 The v0.2.1 auditor now reports counts of equal/backward adjacent timestamp steps, duplicate timestamps, sorted-unique interval estimates and total observed timestamp span. **Sorted time statistics never substitute for verified row order.** The public output omits every absolute timestamp and all raw records. It also recognizes the original SCD41 relative humidity header `scd41_rh_pct`.
 
 The first direct source SHA-256 was calculated locally, but is intentionally not recorded in this public document until aggregate publication is reviewed and approved.
+
+
+## Approved acquisition timing evidence (v0.2.1)
+
+See the [published evidence record](../evidence/verified/sensirion-pro-acquisition-timing-v0.2.1.md): **17,280** stored rows, **17,279** unique timestamps, **86,396 seconds** observed time span, **17,277** adjacent intervals of 5 seconds, **one** interval of 11 seconds and **one** interval of 0 seconds. The equal-time records have different sensor values and an observed **+2,317 ms** uptime difference. No adjacent backwards timestamp or uptime transitions were found.
+
+The source checksum was calculated on the owner's computer but **is not public**. These results validate **recording structure only** and do not establish sensor accuracy, complete capture, the origin of a timing anomaly or earlier event interpretations. The public evidence was published only after explicit owner approval.
