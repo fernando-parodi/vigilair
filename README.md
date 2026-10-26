@@ -8,6 +8,14 @@ VigilAir is an independently developed, evolving sensor-fusion project exploring
 
 > The architecture illustration is schematic. The historical dashboard capture (VigilAir v3.2, SCD41 + ENS160) is available in the accompanying [public starter package](https://github.com/fernando-parodi/vigilair) for later binary upload. The image is **not** evidence of a released Sensirion SGP41 product.
 
+## Current milestone: v0.2 — Measurement Transparency
+
+The **v0.2 public evidence framework** is available, with [measurement provenance and evidence tiers](docs/measurement-transparency-v0.2.md), a [May 2026 historical analysis record](docs/historical-sensirion-pro-2026-05.md), a [measurement dictionary](docs/measurement-data-dictionary.md), and an [offline SHA-256/CSV audit tool](scripts/public_measurement_audit.py).
+
+**Data status:** the original 17,279-row Sensirion Pro CSV has **not** been re-opened for this publication. No real raw samples have been uploaded. The May 2026 counts and event categories are clearly labeled historical, unverified report results. Reproducible aggregate verification awaits a local audit of the original Windows F: drive file.
+
+To generate a local, privacy-reduced report, follow the [Windows export procedure](docs/public-export-protocol.md). The export does not upload or publish any data automatically.
+
 ## Two developed configurations
 
 | Track | Sensors | Measurement meaning | Available development evidence |
