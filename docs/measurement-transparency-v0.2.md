@@ -44,3 +44,11 @@ The script does not upload any data, infer pollutant identity, or claim calibrat
 - No proven exposure-limit compliance, regulatory conformity or safety-critical alarming.
 
 **A verified and voluntarily approved aggregate report can be appended in v0.2.1.** This doesn't require publishing private raw data or proprietary firmware.
+
+## Timestamp-order diagnostic refinement (v0.2.1)
+
+The first offline direct check of the original file returned 17,280 rows (versus the historical 17,279), zero unparseable timestamps, and `cadence: null` due to one or more adjacent non-increasing timestamps. That confirms **row count and timestamp parseability**, not time continuity.
+
+The v0.2.1 auditor now reports counts of equal/backward adjacent timestamp steps, duplicate timestamps, sorted-unique interval estimates and total observed timestamp span. **Sorted time statistics never substitute for verified row order.** The public output omits every absolute timestamp and all raw records. It also recognizes the original SCD41 relative humidity header `scd41_rh_pct`.
+
+The first direct source SHA-256 was calculated locally, but is intentionally not recorded in this public document until aggregate publication is reviewed and approved.
