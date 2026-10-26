@@ -16,7 +16,8 @@ If you already have the repository, run `git pull` instead of cloning. Python 3 
 ## 2. Compute a local redacted audit
 
 ```powershell
-py -3 .\scripts\public_measurement_audit.py --csv "F:\SGP41 and SCD41 new device\data_analysis\vigilair_sensirion_pro_last_1440_min.csv" --out "$env:USERPROFILE\Desktop\vigilair-v02-review"
+$csv = Read-Host "Enter the full path to your original VigilAir CSV"
+py -3 .\scripts\public_measurement_audit.py --csv "$csv" --out "$env:USERPROFILE\Desktop\vigilair-v02-review"
 ```
 
 This creates **only** `vigilair_v02_public_audit.json` in the desktop review folder, not in GitHub. The script produces a local SHA-256 and aggregated statistics. It does not open the network or export raw measurements.
