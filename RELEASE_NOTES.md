@@ -1,3 +1,15 @@
+# v0.2.1 — Verified acquisition-timing aggregate (GitHub commit milestone)
+
+An authorized, **aggregate-only** report from the original private Sensirion Pro CSV was published after owner-run local auditing. See [evidence report](evidence/verified/sensirion-pro-acquisition-timing-v0.2.1.md).
+
+The 17,280 stored rows (17,279 distinct timestamps) cover 23:59:56. Across 17,279 adjacent intervals: 17,277 were 5 seconds, one was 11 seconds, and one was 0 seconds. No backward timestamp steps or uptime counter decreases were seen. The same-time pair has different readings and +2,317 ms uptime.
+
+The audit verifies **recording/timestamp structure**, not sample completeness, chemical identity, calibrated performance or historical event classifications. Full source CSV, measurement rows, absolute timestamps, device identifiers, source path, SHA-256 digest and proprietary code remain private.
+
+**Publication type:** public repository evidence commit; not a separately created GitHub tagged Release.
+
+---
+
 # v0.2 — Measurement Transparency (provenance framework)
 
 - Added data provenance classifications: direct source verification versus historical analysis versus illustration versus synthetic fixtures.
